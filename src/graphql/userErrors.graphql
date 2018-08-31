@@ -1,0 +1,17 @@
+query userErrors{
+  userErrors{
+    id
+    title
+    category
+    level
+    col
+    line
+    appId
+    createdAt
+    updatedAt
+    errorApp{
+      id
+      name
+    }
+  }
+}

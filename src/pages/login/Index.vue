@@ -21,6 +21,7 @@
 </template>
 
 <script>
+  import api from '../../api'
 export default {
   data () {
     return {
@@ -41,7 +42,19 @@ export default {
   methods:{
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    }
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          let res=await api.login(this.login);
+          this.$store.commit('setToken',{token:res.token});
+          this.$router.push('/index')
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
   }
 }
 </script>
