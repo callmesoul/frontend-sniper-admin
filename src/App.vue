@@ -2,16 +2,17 @@
   <div id="app" class="flex flex-v">
     <header>
       <el-menu
-        :default-active="activeIndex2"
+        default-active="/index"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
         background-color="#000000"
         text-color="#fff"
-        active-text-color="#ffd04b">
-        <el-menu-item index="1"><icon icon="home" />首页</el-menu-item>
-        <el-menu-item index="2"><icon icon="torah" />项目</el-menu-item>
-        <el-menu-item index="3"><icon icon="cog" />配置</el-menu-item>
+        active-text-color="#ffd04b"
+        router="true">
+        <el-menu-item index="/index"><icon icon="home" />首页</el-menu-item>
+        <el-menu-item index="/app"><icon icon="torah" />项目</el-menu-item>
+        <el-menu-item index="/config"><icon icon="cog" />配置</el-menu-item>
       </el-menu>
     </header>
     <div id="main" class="flex1">

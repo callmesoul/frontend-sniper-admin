@@ -1,0 +1,53 @@
+@import "../../assets/style/base";
+
+.app-list{
+  .header{
+    border-bottom: 1px solid $borderColor;
+    padding-bottom: 15px;
+    .el-input{
+      width: 200px;
+    }
+  }
+  .app-list-warp{
+    margin-top: 15px;
+    font-size: 0;
+    .app-item {
+      width: calc( (100% -  15px * 2  - 6px )  / 3);
+      display: inline-block;
+      margin-right: 15px;
+      margin-bottom: 15px;
+
+      &:nth-child(3n){
+        margin-right: 0;
+      }
+      .top{
+        .name{
+          color: #1b88ee;
+          svg{
+            margin: 5px;
+            display: inline-block;
+            vertical-align: text-top;
+          }
+          font-size: 20px;
+        }
+
+        .email{
+          svg{
+            font-size: 20px;
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+          }
+        }
+      }
+      .bottom{
+        color: #999999;
+        font-size: 12px;
+        margin-top: 120px;
+      }
+    }
+  }
+}
+
+

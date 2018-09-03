@@ -1,10 +1,69 @@
-
+@import "../../assets/style/base";
 
 #index{
   height: 100%;
 
+  .index-list{
+    height: 100%;
+    .error-list{
+      height: 100%;
+      overflow: auto;
+      .error-item{
+        min-width: 0;
+        padding: 10px;
+        border: 1px solid #eeeeee;
+        border-radius: 10px;
+        margin-bottom: 15px;
+
+        &:hover{
+          background: #eeeeee;
+          cursor: pointer;
+        }
+        svg{
+          margin-right: 10px;
+          &.error{
+            color: red;
+          }
+          &.warning{
+            color: yellow;
+          }
+          &.info{
+            color: blue;
+          }
+        }
+        .project{
+          color: cornflowerblue;
+          margin-right: 10px;
+          @extend .textOverflowEllipsis;
+        }
+        .time{
+          font-size: 12px;
+          color: $gray;
+        }
+      }
+    }
+
+  }
+
   .index-right{
     width: 20%;
     margin-left: 30px;
+
+    .app-list{
+
+      .app-item{
+        display: block;
+        color: #1b88ee;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eeeeee;
+        padding-bottom: 15px;
+
+        &:last-child{
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-bottom: 0;
+        }
+      }
+    }
   }
 }

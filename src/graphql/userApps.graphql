@@ -1,0 +1,10 @@
+query userApps{
+  userApps{
+    id
+    name
+    appId
+    appScrect
+    emailNotice
+    updatedAt
+  }
+}

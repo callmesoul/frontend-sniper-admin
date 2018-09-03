@@ -1,0 +1,17 @@
+query appErrors($id:ID!,$page:Int,$limit:Int){
+  appErrors(id:$id,page:$page,limit:$limit){
+    rows{
+      id
+      title
+      msg
+      category
+      level
+      updatedAt
+    }
+    pageParams{
+      page
+      limit
+      totalPage
+    }
+  }
+}

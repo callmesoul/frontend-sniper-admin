@@ -1,0 +1,40 @@
+$mainColor: #ffda44;
+$mainHoverColor: rgba(255,218,68,0.5);
+$mainActiveColor: #ffb70b;
+$hoverBgColor: rgba(27,136,238,0.1);
+$borderColor:#dcdfe6;
+$red:#ff0000;
+$blue:#1b88ee;
+$gray:#999999;
+.red{
+  color: $red;
+}
+.blue{
+  color: $blue;
+}
+.gray{
+  color: $gray;
+}
+
+.absoluteParent{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+
+.textTwoLineEllipsis{
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.textOverflowEllipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

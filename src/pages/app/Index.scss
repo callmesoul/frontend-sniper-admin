@@ -1,0 +1,19 @@
+@import "../../assets/style/base";
+
+#apps{
+  height: 100%;
+  .header-title{
+    font-size: 28px;
+    color: #1b88ee;
+    svg{
+      margin-right: 5px;
+    }
+  }
+
+  .el-tabs{
+    margin-top: 30px;
+  }
+}
+
+
+

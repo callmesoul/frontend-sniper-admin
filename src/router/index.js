@@ -4,6 +4,8 @@ import HelloWorld from '@/components/HelloWorld'
 import Index from '@/pages/index/Index'
 import Login from '@/pages/login/Index'
 import Register from '@/pages/register/Index'
+import App from '@/pages/app/Index'
+import AppList from '@/pages/app/List'
 
 Vue.use(Router)
 
@@ -28,6 +30,16 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/app',
+      name: 'appList',
+      component: AppList
+    },
+    {
+      path: '/app/:id',
+      name: 'app',
+      component: App
     },
   ]
 })

@@ -5,7 +5,10 @@ html,body{
 
 
 
-
+a,a:active:visited:hover{
+  cursor: pointer;
+  text-decoration: none;
+}
 /////Benz
 .pull-left{
   float: left;
@@ -135,4 +138,11 @@ html,body{
 
 .full-page{
   height: 100%;
+}
+
+
+
+
+.el-pagination{
+  text-align: right;
 }
