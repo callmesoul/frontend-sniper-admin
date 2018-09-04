@@ -1,0 +1,20 @@
+
+query emailList($page:Int,$limit:Int,$appId:Int){
+  emailList(page:$page,limit:$limit,appId:$appId){
+    rows{
+      id
+      email
+      appId
+      createdAt
+      emailApp{
+        id
+        name
+      }
+    }
+    pageParams{
+      page
+      limit
+      totalPage
+    }
+  }
+}

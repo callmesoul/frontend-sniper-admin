@@ -6,6 +6,8 @@ import Login from '@/pages/login/Index'
 import Register from '@/pages/register/Index'
 import App from '@/pages/app/Index'
 import AppList from '@/pages/app/List'
+import Cofing from '@/pages/config/Index'
+import Email from '@/pages/email/Index'
 
 Vue.use(Router)
 
@@ -40,6 +42,16 @@ export default new Router({
       path: '/app/:id',
       name: 'app',
       component: App
+    },
+    {
+      path: '/config',
+      name: 'config',
+      component: Cofing
+    },
+    {
+      path: '/email',
+      name: 'email',
+      component: Email
     },
   ]
 })

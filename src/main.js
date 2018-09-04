@@ -6,14 +6,14 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome,faTorah,faCog,faExclamationTriangle} from '@fortawesome/free-solid-svg-icons'
+import { faHome,faTorah,faCog,faExclamationTriangle,faEnvelope} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import store from './vuex/store'
 import apolloProvider from './apolloProvider'
 import filter from './filter'
 
-library.add(faHome,faTorah,faCog,faExclamationTriangle)
+library.add(faHome,faTorah,faCog,faExclamationTriangle,faEnvelope)
 
 Vue.component('icon', FontAwesomeIcon)
 
