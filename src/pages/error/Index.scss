@@ -1,0 +1,34 @@
+@import "../../assets/style/base";
+
+#error{
+  .top{
+    font-size: 24px;
+    .el-tag{
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  }
+
+  .error-msg{
+    margin-top: 15px;
+    background: #eeeeee;
+    padding: 15px;
+
+    .typerror-msg-title{
+      font-size: 18px;
+    }
+
+    .error-msg-list{
+      .error-msg-item{
+        border-bottom: 1px solid #e5e5e5;
+        padding: 10px 0;
+        label{
+          width: 150px;
+          margin-right: 10px;
+          color: #999999;
+        }
+      }
+    }
+  }
+}

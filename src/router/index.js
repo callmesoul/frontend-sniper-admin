@@ -8,6 +8,7 @@ import App from '@/pages/app/Index'
 import AppList from '@/pages/app/List'
 import Cofing from '@/pages/config/Index'
 import Email from '@/pages/email/Index'
+import Error from '@/pages/error/Index'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ export default new Router({
       path: '/email',
       name: 'email',
       component: Email
+    },
+    {
+      path: '/error/:id',
+      name: 'error',
+      component: Error
     },
   ]
 })

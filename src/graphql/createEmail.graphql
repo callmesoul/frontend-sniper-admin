@@ -1,0 +1,5 @@
+mutation createEmail($appId:Int!,$email:String!){
+  createEmail(appId:$appId,email:$email){
+    id
+  }
+}

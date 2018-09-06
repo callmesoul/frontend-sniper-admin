@@ -9,11 +9,12 @@
         <div class="top ">
           <router-link :to="{name:'app',params:{id:item.id}}" class="name"><icon icon="torah" />{{item.name}}</router-link>
           <span class="pull-right email">
-            <icon icon="cog" />
+            <icon @click.event="editItem(item)" icon="cog" />
             <el-switch
-                       v-model="item.emailNotice"
-                       active-text="邮件通知">
-          </el-switch>
+              disabled
+              v-model="item.emailNotice"
+              active-text="邮件通知">
+            </el-switch>
           </span>
         </div>
         <div class="bottom">
@@ -43,7 +44,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
   </span>
     </el-dialog>
   </div>
@@ -51,6 +52,8 @@
 
 <script>
   import userApps from '@/graphql/userApps.graphql';
+  import createApp from '@/graphql/createApp.graphql';
+  import updateApp from '@/graphql/updateApp.graphql';
 export default {
   data () {
     return {
@@ -60,6 +63,14 @@ export default {
       app:{
         name:'',
         emailNotice:false,
+      },
+      rules:{
+        name:[
+          { required: true, message: '请填写项目名称', trigger: 'blur' }
+        ],
+        emailNotice:[
+          { required: true, message: '请选择是否发送邮件通知', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -75,6 +86,32 @@ export default {
         emailNotice:false
       }
       this.dialogVisible=true;
+    },
+    editItem(item){
+      this.dialogTitle='编辑项目';
+      this.app=JSON.parse(JSON.stringify(item));
+      this.dialogVisible=true;
+    },
+    submitForm(form){
+      this.$refs[form].validate(async (val)=>{
+        if(val){
+          if(this.app.id){
+            let res=await this.$apollo.mutate({mutation:updateApp,variables:this.app});
+            if(res.data.updateApp){
+              this.getUserApps();
+              this.$message.success('更新成功')
+              this.dialogVisible=false;
+            }
+          }else {
+            let res=await this.$apollo.mutate({mutation:createApp,variables:this.app});
+            if(res.data.createApp){
+              this.getUserApps();
+              this.$message.success('创建成功')
+              this.dialogVisible=false;
+            }
+          }
+        }
+      })
     }
   },
   async created(){

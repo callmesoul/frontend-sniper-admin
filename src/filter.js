@@ -35,6 +35,13 @@ const filter={
     else if(_min>=1) {result= "" + ~~(_min) +" 分钟前"}
     else result="刚刚";
     return result;
+  },
+  screen:(value,{key:_value})=>{
+    if(value[key]===_value){
+      return ''
+    }else {
+      return value;
+    }
   }
 }
 export default filter;

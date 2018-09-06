@@ -1,0 +1,5 @@
+mutation createApp($name:String!,$emailNotice:Boolean!){
+  createApp(name:$name,emailNotice:$emailNotice){
+    id
+  }
+}

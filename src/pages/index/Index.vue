@@ -2,12 +2,12 @@
   <div id="index" class="flex">
     <div class="index-list flex1">
       <el-card class="error-list" shadow="never">
-        <div v-for="item in errors" :key="item.id" class="flex flex-align-center error-item">
+        <router-link :to="{name:'error',params:{id:item.id}}" v-for="item in errors" :key="item.id" class="flex flex-align-center error-item">
           <icon icon="exclamation-triangle" :class="{'error':item.level==='error','warning':item.level==='warning','info':item.level==='info'}" />
           <span class="project">{{item.errorApp.name}}</span>
           <span class="cont flex1">{{item.title}}</span>
           <span class="time">{{item.updatedAt | time}}</span>
-        </div>
+        </router-link>
       </el-card>
     </div>
     <div class="index-right">

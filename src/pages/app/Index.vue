@@ -52,6 +52,7 @@
 
 <script>
   import appErrors from '@/graphql/appErrors.graphql';
+
 export default {
   data () {
     return {
