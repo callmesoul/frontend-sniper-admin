@@ -14,11 +14,18 @@
 - 错误探针 [better-js](https://github.com/callmesoul/better-js)
 
 
+
+
+
+
 ## todo
 
-1. [ ] 添加UA信息
-2. [ ] 添加用户信息
-3. [ ] 记录用户行为
+- [x] 支持vue
+- [x] 邮件通知（新错误报错，旧错误5n次发邮件报错）
+- [ ] 添加UA信息
+- [ ] 添加用户信息
+- [ ] 记录用户行为
+- [ ] 手动上传报错
 
 
 > A Vue.js project
