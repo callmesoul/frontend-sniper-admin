@@ -61,10 +61,12 @@
 
 <script>
   import error from '@/graphql/error.graphql';
+
 export default {
   data () {
     return {
-      error: {}
+      error: {},
+
     }
   },
   methods:{
@@ -76,6 +78,7 @@ export default {
   },
   async created(){
     this.getErrot();
+    this.getApp();
   }
 }
 </script>

@@ -2,12 +2,19 @@
   <div id="index" class="flex">
     <div class="index-list flex1">
       <el-card class="error-list" shadow="never">
-        <router-link :to="{name:'error',params:{id:item.id}}" v-for="item in errors" :key="item.id" class="flex flex-align-center error-item">
-          <icon icon="exclamation-triangle" :class="{'error':item.level==='error','warning':item.level==='warning','info':item.level==='info'}" />
-          <span class="project">{{item.errorApp.name}}</span>
-          <span class="cont flex1">{{item.title}}</span>
-          <span class="time">{{item.updatedAt | time}}</span>
-        </router-link>
+        <template v-if="errors.length>0">
+          <router-link :to="{name:'error',params:{id:item.id}}" v-for="item in errors" :key="item.id" class="flex flex-align-center error-item">
+            <icon icon="exclamation-triangle" :class="{'error':item.level==='error','warning':item.level==='warning','info':item.level==='info'}" />
+            <span class="project">{{item.errorApp.name}}</span>
+            <span class="cont flex1">{{item.title}}</span>
+            <span class="time">{{item.updatedAt | time}}</span>
+          </router-link>
+        </template>
+        <template v-else>
+          <div class="null">
+            暂没有内容
+          </div>
+        </template>
       </el-card>
     </div>
     <div class="index-right">
@@ -16,9 +23,16 @@
           <span>我的项目</span>
         </div>
         <div class="app-list">
-          <router-link :to="{name:'app',params:{id:item.id}}" class="app-item" v-for="item in apps" :key="item.id">
-            <icon icon="torah" /> {{item.name}}
-          </router-link>
+          <tempalte v-if="apps.length>0">
+            <router-link :to="{name:'app',params:{id:item.id}}" class="app-item" v-for="item in apps" :key="item.id">
+              <icon icon="torah" /> {{item.name}}
+            </router-link>
+          </tempalte>
+          <template v-else>
+            <div class="null">
+              暂没有内容
+            </div>
+          </template>
         </div>
       </el-card>
     </div>

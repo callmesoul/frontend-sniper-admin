@@ -40,7 +40,7 @@ const mutations = {
         state.user = null
     },
     [LOGOUT_USER](state, action) {
-        localStorage.removeItem("sessionKey");
+        localStorage.removeItem("token");
         state.user = null;
         state.classId=null;
         state.sessionKey = null;

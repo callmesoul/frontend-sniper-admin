@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="flex flex-v">
-    <header>
+    <header v-if="$route.name!=='login' && $route.name!=='register'">
       <el-menu
         default-active="/index"
         class="el-menu-demo"

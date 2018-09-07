@@ -1,7 +1,7 @@
 <template>
   <div id="apps" class="flex flex-v" >
     <div class="header-title">
-      <icon icon="torah"></icon>我爱阅读
+      <icon icon="torah"></icon>{{app.name}}
     </div>
     <el-tabs v-model="tabActive" class="flex1 flex flex-v" type="card" @tab-click="handleClick">
       <el-tab-pane label="错误" name="error" value="error" class="flex1 flex flex-v">
@@ -52,7 +52,7 @@
 
 <script>
   import appErrors from '@/graphql/appErrors.graphql';
-
+  import app from '@/graphql/app.graphql';
 export default {
   data () {
     return {
@@ -61,7 +61,8 @@ export default {
       pageParams:{
         page:1,
         limit:12
-      }
+      },
+      app:{}
     }
   },
   methods:{
@@ -73,11 +74,16 @@ export default {
     pageChange(page){
       this.pageParams.page=page;
       this.getAppErrors();
-    }
+    },
+    async getApp(){
+      let res=await this.$apollo.query({query:app,variables:{id:this.$route.params.id}});
+      this.app=res.data.app;
+    },
   },
   async created(){
     this.pageParams.id=this.$route.params.id;
     this.getAppErrors();
+    this.getApp();
   }
 }
 </script>

@@ -29,7 +29,7 @@ router.beforeEach(async (to, from, next) => { //to:目标，from：来源
   if (to.meta.title) {//设置title
     document.title = to.meta.title
   }
-  if(to.name==="login"){
+  if(to.name==="login" || to.name==="register"){
     next();
   }else {
     if(store.state.auth.token){

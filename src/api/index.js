@@ -1,6 +1,9 @@
 import axios from 'axios'
-
-
+import config from '../utils/config'
+import store from '../vuex/store'
+import router from '../router'
+import {Message} from 'element-ui'
+axios.defaults.baseURL = config.service();
 axios.interceptors.request.use(
   config => {
     return config;
@@ -14,8 +17,11 @@ axios.interceptors.response.use(
   error => {
     if (error.response) {
       if (error.response.status === 403 || error.response.status === 401) {
-        store.dispatch({type: 'REMOVE_TOKEN'});
-        alert(error.response.data.error);
+        store.commit('LOGOUT_USER');
+        Message.error(error.response.data.message);
+        if(router.app.$route.name !=='login' &&  router.app.$route.name !=='register'){
+          router.push({name:'login'});
+        }
       }
     }
     console.log(error)
@@ -27,17 +33,14 @@ axios.interceptors.response.use(
   }
 );
 
-if (process.env.NODE_ENV === 'development') {//测试域名
-  // axios.defaults.baseURL = "http://172.18.16.232:8080";
-  axios.defaults.baseURL = "http://127.0.0.1:7001";
-} else {//正式域名
-  // axios.defaults.baseURL = "http://192.168.1.150:81";
-  axios.defaults.baseURL = "";
-}
+
 
 let api={
   login: (params) =>{
     return axios.post("/login",params);
+  },
+  register: (params) =>{
+    return axios.post("/register",params);
   }
 }
 

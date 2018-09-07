@@ -3,6 +3,7 @@
     <el-card class="box-card login-warp">
       <div slot="header" class="clearfix">
         <span>登陆</span>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="ToRegister">注册</el-button>
       </div>
       <el-form :model="login" :rules="rules" ref="login" label-width="100px" >
         <el-form-item label="用户名" prop="username">
@@ -55,6 +56,9 @@ export default {
         }
       });
     },
+    ToRegister(){
+      this.$router.push({name:'register'});
+    }
   }
 }
 </script>

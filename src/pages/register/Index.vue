@@ -3,6 +3,7 @@
     <el-card class="box-card login-warp">
       <div slot="header" class="clearfix">
         <span>注册</span>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="toLogin">登录</el-button>
       </div>
       <el-form :model="register" :rules="rules" ref="register" label-width="100px" >
         <el-form-item label="用户名" prop="username">
@@ -24,6 +25,7 @@
 </template>
 
 <script>
+  import api from '../../api'
 export default {
   data () {
     return {
@@ -49,6 +51,20 @@ export default {
   methods:{
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    toLogin(){
+      this.$router.push({name:'login'});
+    },
+    submitForm(form){
+      this.$refs[form].validate(async (val)=>{
+        if(val){
+          let res=await api.register(this.register);
+          if(res.token){
+            this.$store.commit('setToken',{token:res.token});
+            this.$router.push('/index')
+          }
+        }
+      })
     }
   }
 }

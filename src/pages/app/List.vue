@@ -4,11 +4,12 @@
       <el-input v-model="input" placeholder="请输入名称或id"></el-input>
       <el-button class="pull-right" type="primary" @click="createApp">添加项目</el-button>
     </div>
-    <div class="app-list-warp">
-      <el-card shadow="never" class="app-item" v-for="item in apps">
-        <div class="top ">
-          <router-link :to="{name:'app',params:{id:item.id}}" class="name"><icon icon="torah" />{{item.name}}</router-link>
-          <span class="pull-right email">
+    <tempalte v-if="apps.length>0">
+      <div class="app-list-warp" >
+        <el-card shadow="never" class="app-item" v-for="item in apps" :key="item.id">
+          <div class="top ">
+            <router-link :to="{name:'app',params:{id:item.id}}" class="name"><icon icon="torah" />{{item.name}}</router-link>
+            <span class="pull-right email">
             <icon @click.event="editItem(item)" icon="cog" />
             <el-switch
               disabled
@@ -16,17 +17,24 @@
               active-text="邮件通知">
             </el-switch>
           </span>
-        </div>
-        <div class="bottom">
-          <div class="text-left">AppId:{{item.appId}}</div>
-          <div class="flex">
-            <span class="flex1">AppScrect:{{item.appScrect}}</span>
-            <span class=" text-right">{{item.updatedAt | time}}</span>
           </div>
+          <div class="bottom">
+            <div class="text-left">AppId:{{item.appId}}</div>
+            <div class="flex">
+              <span class="flex1">AppScrect:{{item.appScrect}}</span>
+              <span class=" text-right">{{item.updatedAt | time}}</span>
+            </div>
 
-        </div>
-      </el-card>
-    </div>
+          </div>
+        </el-card>
+      </div>
+    </tempalte>
+    <template v-else>
+      <div class="null">
+        暂没有内容
+      </div>
+
+    </template>
 
 
     <el-dialog
