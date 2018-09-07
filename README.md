@@ -1,3 +1,5 @@
+![logo](https://github.com/callmesoul/frontend-sniper-admin/blob/master/static/frontend-sniper.png)
+
 # frontend-sniper-admin
 ### 前端错误监控系统后台管理端
 其实线上已经有很多监控系统了，例如fundebug。试用了一下还是挺不错的。 可惜都是收费的，免费的只能创建一个项目，收费也不便宜。 对于一些小公司来说很难花钱去搞，而且对小公司来说功能也不需要太复杂。 一些js的报错和接口报错就可以大大加快bug的修复，和预知bug。（当上级和测试都还没发现时） 所以我还是写这么个系统，是从自身需求出发吧。功能可以慢慢完善。
