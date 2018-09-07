@@ -6,6 +6,11 @@
 
 现在初期只实现了简单的js和接口资源报错。后期会加入UA和用户等信息以完善错误信息追踪错误。 对服务端还是新手所以代码质量....graphql也是试手。 但好在错误监控系统一般内部人使用，独立不影响线上项目和用户。所以大胆地使用吧。
 
+##demo
+[demo](http://frontend-sniper-admin.callmesoul.cn)
+username:test
+password:test
+
 
 ## 项目集
 
