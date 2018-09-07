@@ -9,6 +9,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHome,faTorah,faCog,faExclamationTriangle,faEnvelope} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+
+
 import store from './vuex/store'
 import apolloProvider from './apolloProvider'
 import filter from './filter'
@@ -23,7 +25,19 @@ Object.keys(filter).forEach(key => {///挂载过滤器
   Vue.filter(key, filter[key])
 })
 
+Vue.config.errorHandler = function (err, vm, info) {
+  let { message, name, script, line, column, stack } = err;
+  // 在vue提供的error对象中，script、line、column目前是空的。但这些信息其实在错误栈信息里可以看到。
+  script = !_.isUndefined(script) ? script : '';
+  line = !_.isUndefined(line) ? line : 0;
+  column = !_.isUndefined(column) ? line : 0;
+  // 解析错误栈信息
+  let stackStr = stack ? stack.toString() : `${name}:${message}`;
 
+  console.log('------------------');
+  console.log(stackStr);
+
+}
 //路由拦截
 router.beforeEach(async (to, from, next) => { //to:目标，from：来源
   if (to.meta.title) {//设置title

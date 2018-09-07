@@ -22,6 +22,7 @@
     "apollo-link-http": "^1.5.4",
     "axios": "^0.18.0",
     "element-ui": "^2.4.6",
+    "frontend-sniper": "0.0.3",
     "graphql": "^14.0.0",
     "graphql-tag": "^2.9.2",
     "moment": "^2.22.2",
