@@ -8,42 +8,5 @@
   </head>
   <body>
     <div id="app"></div>
-
-    <script src="static/frontend-sniper.js"></script>
-    <script>
-      window.betterJs.init({
-        vue: true,
-        sendError: function (error) {
-          fetch('http://frontend-sniper.callmesoul.cn/createError', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'appId':'3c6f4e60-b277-11e8-9320-b310e7c4ac79',
-              'appScrect':'3c6f4e61-b277-11e8-9320-b310e7c4ac79'
-            },
-            body: JSON.stringify({
-              date: new Date(),
-              error
-            })
-          })
-            .then(res => {
-              if (res.ok) { // True if status is HTTP 2xx
-                return res;
-              }
-              throw new Error(res.status + ':' + res.statusText);
-            })
-            .then(res => {
-              return res.json();
-            })
-            .then(res => {
-              console.log(res);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        }
-      });
-    </script>
-    <!-- built files will be auto injected -->
   </body>
 </html>

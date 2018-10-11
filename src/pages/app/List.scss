@@ -39,6 +39,14 @@
             vertical-align: middle;
             cursor: pointer;
           }
+          .notice{
+            color: #999999;
+          }
+          .edit{
+            &:hover{
+              color: $mainColor;
+            }
+          }
         }
       }
       .bottom{

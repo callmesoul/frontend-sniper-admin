@@ -1,5 +1,5 @@
 
-query emailList($page:Int,$limit:Int,$appId:Int){
+query emailList($page:Int,$limit:Int,$appId:ID){
   emailList(page:$page,limit:$limit,appId:$appId){
     rows{
       id
@@ -15,6 +15,7 @@ query emailList($page:Int,$limit:Int,$appId:Int){
       page
       limit
       totalPage
+      appId
     }
   }
 }

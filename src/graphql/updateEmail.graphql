@@ -1,3 +1,12 @@
 mutation updateEmail($appId:Int!,$email:String!,$id:ID!){
-  updateEmail(appId:$appId,email:$email,id:$id)
+  updateEmail(appId:$appId,email:$email,id:$id){
+    id
+    email
+    appId
+    createdAt
+    emailApp{
+      id
+      name
+    }
+  }
 }

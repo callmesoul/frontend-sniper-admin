@@ -6,7 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome,faTorah,faCog,faExclamationTriangle,faEnvelope} from '@fortawesome/free-solid-svg-icons'
+import { faHome,faTorah,faCog,faExclamationTriangle,faEnvelope,faPenSquare,faBellSlash,faBell,faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
@@ -15,7 +15,7 @@ import store from './vuex/store'
 import apolloProvider from './apolloProvider'
 import filter from './filter'
 
-library.add(faHome,faTorah,faCog,faExclamationTriangle,faEnvelope)
+library.add(faHome,faTorah,faCog,faExclamationTriangle,faEnvelope,faPenSquare,faBellSlash,faBell,faTrashAlt)
 
 Vue.component('icon', FontAwesomeIcon)
 

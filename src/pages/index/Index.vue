@@ -23,11 +23,11 @@
           <span>我的项目</span>
         </div>
         <div class="app-list">
-          <tempalte v-if="apps.length>0">
+          <template v-if="apps.length>0">
             <router-link :to="{name:'app',params:{id:item.id}}" class="app-item" v-for="item in apps" :key="item.id">
               <icon icon="torah" /> {{item.name}}
             </router-link>
-          </tempalte>
+          </template>
           <template v-else>
             <div class="null">
               暂没有内容
@@ -41,11 +41,12 @@
 
 <script>
   import userErrors from '@/graphql/userErrors.graphql';
-  import userApps from '@/graphql/userApps.graphql';
+  import userApps from '@/graphql/app/userApps.graphql';
 export default {
   data () {
     return {
-      errors: []
+      errors: [],
+      apps:[]
     }
   },
   methods:{

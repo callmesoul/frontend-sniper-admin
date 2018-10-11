@@ -1,0 +1,10 @@
+mutation updateApp($name:String!,$emailNotice:Boolean!,$id:ID!){
+  updateApp(name:$name,emailNotice:$emailNotice,id:$id){
+    id
+    name
+    appId
+    appScrect
+    emailNotice
+    updatedAt
+  }
+}

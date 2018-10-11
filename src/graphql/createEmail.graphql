@@ -1,5 +1,12 @@
-mutation createEmail($appId:Int!,$email:String!){
+mutation createEmail($appId:ID!,$email:String!){
   createEmail(appId:$appId,email:$email){
     id
+    email
+    appId
+    createdAt
+    emailApp{
+      id
+      name
+    }
   }
 }

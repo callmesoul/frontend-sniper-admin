@@ -1,5 +1,5 @@
-query userApps{
-  userApps{
+query userApps($name:String){
+  userApps(name:$name){
     id
     name
     appId

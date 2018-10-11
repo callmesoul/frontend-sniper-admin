@@ -37,7 +37,7 @@ export default new Router({
     {
       path: '/app',
       name: 'appList',
-      component: AppList
+      component: AppList,
     },
     {
       path: '/app/:id',

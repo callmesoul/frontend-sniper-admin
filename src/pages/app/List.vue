@@ -1,34 +1,31 @@
 <template>
   <div class="app-list full-page flex flex-v" >
     <div class="header">
-      <el-input v-model="input" placeholder="请输入名称或id"></el-input>
+      <el-input v-model="keywords" placeholder="请输入名称" @keyup.enter.native="searchApp"></el-input>
       <el-button class="pull-right" type="primary" @click="createApp">添加项目</el-button>
     </div>
-    <tempalte v-if="apps.length>0">
+    <template v-if="userApps.length>0">
       <div class="app-list-warp" >
-        <el-card shadow="never" class="app-item" v-for="item in apps" :key="item.id">
+        <el-card shadow="never" class="app-item" v-for="(item,index) in userApps" :key="item.id">
           <div class="top ">
             <router-link :to="{name:'app',params:{id:item.id}}" class="name"><icon icon="torah" />{{item.name}}</router-link>
             <span class="pull-right email">
-            <icon @click.event="editItem(item)" icon="cog" />
-            <el-switch
-              disabled
-              v-model="item.emailNotice"
-              active-text="邮件通知">
-            </el-switch>
-          </span>
+              <icon class="notice" disabled="disabled" :icon="item.emailNotice?'bell':'bell-slash'" />
+              <icon class="edit" @click.event="editItem(item,index)" icon="pen-square" />
+              <icon class="edit" @click.event="deleteItem(item,index)" icon="trash-alt" />
+            </span>
           </div>
           <div class="bottom">
-            <div class="text-left">AppId:{{item.appId}}</div>
+            <div class="text-left"><b>AppId:</b> {{item.appId}}</div>
             <div class="flex">
-              <span class="flex1">AppScrect:{{item.appScrect}}</span>
+              <span class="flex1"><b>AppScrect:</b> {{item.appScrect}}</span>
               <span class=" text-right">{{item.updatedAt | time}}</span>
             </div>
 
           </div>
         </el-card>
       </div>
-    </tempalte>
+    </template>
     <template v-else>
       <div class="null">
         暂没有内容
@@ -41,7 +38,7 @@
       :title="dialogTitle"
       :visible.sync="dialogVisible"
       width="30%"
-      :before-close="handleClose">
+      >
       <el-form :model="app" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="项目名称" prop="name">
           <el-input v-model="app.name"></el-input>
@@ -59,13 +56,14 @@
 </template>
 
 <script>
-  import userApps from '@/graphql/userApps.graphql';
-  import createApp from '@/graphql/createApp.graphql';
-  import updateApp from '@/graphql/updateApp.graphql';
+  import userApps from '@/graphql/app/userApps.graphql';
+  import createApp from '@/graphql/app/createApp.graphql';
+  import updateApp from '@/graphql/app/updateApp.graphql';
+  import deleteApp from '@/graphql/app/deleteApp.graphql';
 export default {
   data () {
     return {
-      apps:[],
+      userApps:[],
       dialogVisible:false,
       dialogTitle:'创建项目',
       app:{
@@ -79,14 +77,18 @@ export default {
         emailNotice:[
           { required: true, message: '请选择是否发送邮件通知', trigger: 'blur' }
         ]
+      },
+      keywords:''
+    }
+  },
+  apollo: {
+    userApps(){
+      return{
+        query:userApps,
       }
     }
   },
   methods:{
-    async getUserApps(){
-      let res=await this.$apollo.query({query:userApps});
-      this.apps=res.data.userApps;
-    },
     createApp(){
       this.dialogTitle='创建项目';
       this.app={
@@ -95,10 +97,35 @@ export default {
       }
       this.dialogVisible=true;
     },
-    editItem(item){
+    editItem(item,index){
       this.dialogTitle='编辑项目';
       this.app=JSON.parse(JSON.stringify(item));
+      this.app.index=index;
       this.dialogVisible=true;
+    },
+    deleteItem(item,index){
+      this.$confirm(`你确定要删除 ${this.userApps[index].name} 项目？ 是否继续?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        let res=await this.$apollo.mutate({mutation:deleteApp,variables:{id:item.id},update:(store,{data:{deleteApp}})=>{
+          // Read the data from our cache for this query.
+          const data = store.readQuery({ query: userApps })
+          // Add our tag from the mutation to the end
+          if(deleteApp){
+            data.userApps.splice(index,1)
+            // Write our data back to the cache.
+            store.writeQuery({ query: userApps, data })
+          }
+        }});
+        if(res.data.deleteApp){
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }
+      })
     },
     submitForm(form){
       this.$refs[form].validate(async (val)=>{
@@ -106,24 +133,40 @@ export default {
           if(this.app.id){
             let res=await this.$apollo.mutate({mutation:updateApp,variables:this.app});
             if(res.data.updateApp){
-              this.getUserApps();
-              this.$message.success('更新成功')
+              this.$message.success('更新成功');
               this.dialogVisible=false;
             }
           }else {
-            let res=await this.$apollo.mutate({mutation:createApp,variables:this.app});
+            let res=await this.$apollo.mutate({mutation:createApp,variables:this.app,update:(store,{data:{createApp}})=>{
+              // Read the data from our cache for this query.
+              const data = store.readQuery({ query: userApps })
+              // Add our tag from the mutation to the end
+              data.userApps.unshift(createApp)
+              // Write our data back to the cache.
+              store.writeQuery({ query: userApps, data })
+            }});
             if(res.data.createApp){
-              this.getUserApps();
               this.$message.success('创建成功')
               this.dialogVisible=false;
             }
           }
         }
       })
+    },
+    searchApp(value){
+      const variables={}
+      if(this.keywords!==''){
+        variables.name=this.keywords;
+      }else{
+        variables.name=null
+      }
+      this.$apollo.queries.userApps.refetch(variables);
+
+
     }
   },
   async created(){
-    this.getUserApps();
+
   }
 }
 </script>

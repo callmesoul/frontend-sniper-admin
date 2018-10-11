@@ -5,11 +5,10 @@
         default-active="/index"
         class="el-menu-demo"
         mode="horizontal"
-        @select="handleSelect"
         background-color="#000000"
         text-color="#fff"
         active-text-color="#ffd04b"
-        router="true">
+        :router="true">
         <el-menu-item index="/index"><icon icon="home" />首页</el-menu-item>
         <el-menu-item index="/app"><icon icon="torah" />项目</el-menu-item>
         <el-menu-item index="/email"><icon icon="envelope" />邮件通知</el-menu-item>
