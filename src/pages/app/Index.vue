@@ -51,8 +51,7 @@
 </template>
 
 <script>
-  import appErrors from '@/graphql/appErrors.graphql';
-  import app from '@/graphql/app.graphql';
+
 export default {
   data () {
     return {

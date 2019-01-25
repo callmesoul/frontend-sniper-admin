@@ -3,6 +3,7 @@ import config from '../utils/config'
 import store from '../vuex/store'
 import router from '../router'
 import {Message} from 'element-ui'
+
 axios.defaults.baseURL = config.service();
 axios.interceptors.request.use(
   config => {
@@ -24,7 +25,7 @@ axios.interceptors.response.use(
         }
       }
     }
-    console.log(error)
+    console.log(error);
     if(error.response && error.response.data){
       return Promise.reject(error.response.data);  // 返回接口返回的错误信息
     }else{
@@ -33,6 +34,26 @@ axios.interceptors.response.use(
   }
 );
 
+let set= (apiName)=> {
+  let _api={
+    index: (params) =>{
+      return axios.get(`/api/${apiName}`,params);
+    },
+    show: (id) =>{
+      return axios.get(`/api/${apiName}/${id}`);
+    },
+    create: (params) =>{
+      return axios.post(`/api/${apiName}`,params);
+    },
+    destroy: (id) =>{
+      return axios.delete(`/api/${apiName}/${id}`);
+    },
+    update: (params) =>{
+      return axios.put(`/api/${apiName}/${params.id}`,params);
+    },
+  };
+  return _api;
+};
 
 
 let api={
@@ -41,7 +62,10 @@ let api={
   },
   register: (params) =>{
     return axios.post("/register",params);
-  }
-}
+  },
+  errors:set('errors'),
+  emails:set('emails'),
+  apps:set('apps'),
+};
 
 export default api;

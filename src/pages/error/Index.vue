@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  import error from '@/graphql/error.graphql';
+
 
 export default {
   data () {

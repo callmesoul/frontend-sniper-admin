@@ -56,10 +56,7 @@
 </template>
 
 <script>
-  import userApps from '@/graphql/app/userApps.graphql';
-  import createApp from '@/graphql/app/createApp.graphql';
-  import updateApp from '@/graphql/app/updateApp.graphql';
-  import deleteApp from '@/graphql/app/deleteApp.graphql';
+
 export default {
   data () {
     return {

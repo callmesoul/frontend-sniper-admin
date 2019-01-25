@@ -28,8 +28,7 @@
 </template>
 
 <script>
-  import emailConfig from '@/graphql/emailConfig.graphql';
-  import updateEmailConfig from '@/graphql/updateEmailConfig.graphql';
+
 export default {
   data () {
     return {

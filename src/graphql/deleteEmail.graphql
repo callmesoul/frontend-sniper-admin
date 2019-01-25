@@ -1,3 +1,0 @@
-mutation deleteEmail($id:ID!){
-  deleteEmail(id:$id)
-}

@@ -1,8 +1,0 @@
-query emailConfig{
-  emailConfig{
-    id
-    user
-    pass
-    server
-  }
-}

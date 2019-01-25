@@ -98,11 +98,7 @@
 </template>
 
 <script>
-  import emailList from '@/graphql/emailList.graphql';
-  import userApps from '@/graphql/app/userApps.graphql';
-  import deleteEmail from '@/graphql/deleteEmail.graphql';
-  import createEmail from '@/graphql/createEmail.graphql';
-  import updateEmail from '@/graphql/updateEmail.graphql';
+
   import store from "../../vuex/store";
 
   export default {

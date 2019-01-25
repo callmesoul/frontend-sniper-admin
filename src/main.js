@@ -9,13 +9,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHome,faTorah,faCog,faExclamationTriangle,faEnvelope,faPenSquare,faBellSlash,faBell,faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import  api from '@/api';
+
+
 
 
 import store from './vuex/store'
-import apolloProvider from './apolloProvider'
 import filter from './filter'
 
-library.add(faHome,faTorah,faCog,faExclamationTriangle,faEnvelope,faPenSquare,faBellSlash,faBell,faTrashAlt)
+console.log(api);
+
+library.add(faHome,faTorah,faCog,faExclamationTriangle,faEnvelope,faPenSquare,faBellSlash,faBell,faTrashAlt);
 
 Vue.component('icon', FontAwesomeIcon)
 
@@ -37,7 +41,7 @@ Vue.config.errorHandler = function (err, vm, info) {
   console.log('------------------');
   console.log(stackStr);
 
-}
+};
 //路由拦截
 router.beforeEach(async (to, from, next) => { //to:目标，from：来源
   if (to.meta.title) {//设置title
@@ -59,9 +63,8 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  provide: apolloProvider.provide(),
   router,
   store,
   components: { App },
   template: '<App/>'
-})
+});

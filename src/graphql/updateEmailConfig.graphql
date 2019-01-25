@@ -1,8 +1,0 @@
-mutation updateEmailConfig($user:String!,$pass:String!,$server:String!){
-  updateEmailConfig(user:$user,pass:$pass,server:$server){
-    id
-    user
-    pass
-    server
-  }
-}

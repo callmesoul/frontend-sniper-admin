@@ -7,6 +7,6 @@ let config={
     }
   },
   "tokenName": "token"
-}
+};
 
 export default config;

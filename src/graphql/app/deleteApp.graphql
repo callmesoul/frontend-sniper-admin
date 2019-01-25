@@ -1,3 +1,0 @@
-mutation deleteApp($id:ID!){
-  deleteApp(id:$id)
-}

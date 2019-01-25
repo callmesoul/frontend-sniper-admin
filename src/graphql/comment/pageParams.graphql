@@ -1,5 +1,0 @@
-type pageParams{
-  page
-  limit
-  totalPage
-}

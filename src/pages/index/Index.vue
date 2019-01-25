@@ -40,8 +40,7 @@
 </template>
 
 <script>
-  import userErrors from '@/graphql/userErrors.graphql';
-  import userApps from '@/graphql/app/userApps.graphql';
+
 export default {
   data () {
     return {
