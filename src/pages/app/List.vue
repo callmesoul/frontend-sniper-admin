@@ -4,9 +4,9 @@
       <el-input v-model="keywords" placeholder="请输入名称" @keyup.enter.native="searchApp"></el-input>
       <el-button class="pull-right" type="primary" @click="createApp">添加项目</el-button>
     </div>
-    <template v-if="userApps.length>0">
+    <template v-if="apps.length>0">
       <div class="app-list-warp" >
-        <el-card shadow="never" class="app-item" v-for="(item,index) in userApps" :key="item.id">
+        <el-card shadow="never" class="app-item" v-for="(item,index) in apps" :key="item.id">
           <div class="top ">
             <router-link :to="{name:'app',params:{id:item.id}}" class="name"><icon icon="torah" />{{item.name}}</router-link>
             <span class="pull-right email">
@@ -60,7 +60,7 @@
 export default {
   data () {
     return {
-      userApps:[],
+      apps:[],
       dialogVisible:false,
       dialogTitle:'创建项目',
       app:{
@@ -79,11 +79,10 @@ export default {
     }
   },
   apollo: {
-    userApps(){
-      return{
-        query:userApps,
-      }
-    }
+
+  },
+  async created(){
+    this.getapps();
   },
   methods:{
     createApp(){
@@ -101,22 +100,14 @@ export default {
       this.dialogVisible=true;
     },
     deleteItem(item,index){
-      this.$confirm(`你确定要删除 ${this.userApps[index].name} 项目？ 是否继续?`, '提示', {
+      this.$confirm(`你确定要删除 ${this.apps[index].name} 项目？ 是否继续?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async() => {
-        let res=await this.$apollo.mutate({mutation:deleteApp,variables:{id:item.id},update:(store,{data:{deleteApp}})=>{
-          // Read the data from our cache for this query.
-          const data = store.readQuery({ query: userApps })
-          // Add our tag from the mutation to the end
-          if(deleteApp){
-            data.userApps.splice(index,1)
-            // Write our data back to the cache.
-            store.writeQuery({ query: userApps, data })
-          }
-        }});
-        if(res.data.deleteApp){
+        let res= await this.$api.app.destroy(item.id);
+        if(res){
+          this.apps.splice(index,1);
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -128,23 +119,18 @@ export default {
       this.$refs[form].validate(async (val)=>{
         if(val){
           if(this.app.id){
-            let res=await this.$apollo.mutate({mutation:updateApp,variables:this.app});
-            if(res.data.updateApp){
+            let res=await this.$api.app.update(this.app);
+            if(res){
               this.$message.success('更新成功');
               this.dialogVisible=false;
+              this.apps[this.app.index]=this.app;
             }
           }else {
-            let res=await this.$apollo.mutate({mutation:createApp,variables:this.app,update:(store,{data:{createApp}})=>{
-              // Read the data from our cache for this query.
-              const data = store.readQuery({ query: userApps })
-              // Add our tag from the mutation to the end
-              data.userApps.unshift(createApp)
-              // Write our data back to the cache.
-              store.writeQuery({ query: userApps, data })
-            }});
-            if(res.data.createApp){
-              this.$message.success('创建成功')
+            let res=await this.$api.app.create(this.app);
+            if(res){
+              this.$message.success('创建成功');
               this.dialogVisible=false;
+              this.apps.unshift(res.app);
             }
           }
         }
@@ -157,14 +143,17 @@ export default {
       }else{
         variables.name=null
       }
-      this.$apollo.queries.userApps.refetch(variables);
+      this.$apollo.queries.apps.refetch(variables);
 
 
+    },
+    async getapps(){
+      let res=await this.$api.app.index({getSelf:true});
+      if(res){
+        this.apps=res.apps;
+      }
     }
   },
-  async created(){
-
-  }
 }
 </script>
 

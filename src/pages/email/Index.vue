@@ -1,14 +1,14 @@
 <template>
   <div id="email" class="full-page flex flex-v">
     <div class="screen">
-      <el-select :clearable="true" v-model="emailList.pageParams.appId" placeholder="请选择" @change="appChange">
-        <!--|| screen({id:0})-->
+      <el-select :clearable="true" v-model="pageParams.appId" placeholder="请选择" @change="appChange">
         <el-option
-          label="全部"
-          value="0">
+          key="0"
+          label="全部项目"
+          :value.number="0">
         </el-option>
         <el-option
-          v-for="(item,index) in userApps"
+          v-for="(item,index) in apps"
           :key="item.id"
           :label="item.name"
           :value.number="item.id">
@@ -21,13 +21,13 @@
       <template>
         <el-table
           border
-          :data="emailList.rows"
+          :data="emails"
           style="width: 100%">
           <el-table-column
             label="项目"
             width="180">
             <template slot-scope="scope">
-              {{scope.row.emailApp.name}}
+              {{scope.row.app.name}}
             </template>
           </el-table-column>
           <el-table-column
@@ -63,9 +63,9 @@
     </div>
     <el-pagination background
                    layout="prev, pager, next"
-                   :page-count="emailList.pageParams.totalPage"
-                   :page-size="emailList.pageParams.limit"
-                   :current-page="emailList.pageParams.page"
+                   :page-count="pageParams.totalPage"
+                   :page-size="pageParams.limit"
+                   :current-page="pageParams.page"
                    @current-change="pageChange">
     </el-pagination>
 
@@ -81,7 +81,7 @@
         <el-form-item label="项目" prop="appId">
           <el-select v-model="ruleForm.appId" placeholder="请选择项目">
             <el-option
-              v-for="item in userApps"
+              v-for="item in apps"
               :key="item.id"
               :label="item.name"
               :value="item.id">
@@ -100,19 +100,20 @@
 <script>
 
   import store from "../../vuex/store";
+  import Vue2Filters from 'vue2-filters'
 
   export default {
     data() {
       return {
-        apps: [],
+        apps: [
 
-        emailList: {
-          row: [],
-          pageParams: {
-            page: 1,
-            limit: 12,
-            appId: '0'
-          }
+        ],
+        emails:[],
+        pageParams: {
+          page: 1,
+          limit: 12,
+          appId: 0,
+          getSelf:true
         },
         dialogVisible: false,
         dialogTitle: '新增邮件通知',
@@ -135,18 +136,9 @@
         }
       }
     },
+    mixins: [Vue2Filters.mixin],
     apollo: {
-      emailList() {
-        return {
-          query: emailList,
-          variables: this.emailList.pageParams
-        }
-      },
-      userApps() {
-        return {
-          query: userApps,
-        }
-      }
+
     },
     computed: {
       appsAll: function () {
@@ -163,44 +155,35 @@
     },
     methods: {
       async getEmailList() {
-        let pageParams = JSON.parse(JSON.stringify(this.pageParams));
-        if (pageParams.appId) {
-          pageParams.appId = pageParams.appId;
+        let pageParams=JSON.parse(JSON.stringify(this.pageParams));
+        if(pageParams.appId==0){
+          delete  pageParams.appId;
         }
-        let res = await this.$apollo.query({query: emailList, variables: pageParams});
-        this.emails = res.data.emailList.rows;
-        this.pageParams.totalPage = res.data.emailList.pageParams.totalPage;
+        let res= await this.$api.email.index(pageParams);
+        if(res){
+          this.emails = res.rows;
+          this.pageParams.totalPage = Math.ceil(res.count/this.pageParams.limit);
+        }
       },
       async getUserApps() {
-        let res = await this.$apollo.query({query: userApps});
-        let apps = [{name: '全部项目', id: 0}]
-        this.apps = apps.concat(res.data.userApps);
+        let res = await this.$api.app.index({getSelf:true});
+        if(res){
+          this.apps=res.apps
+        }
       },
       appChange(val) {
-        debugger;
-        let pageParams = JSON.parse(JSON.stringify(this.emailList.pageParams));
         if (val === '0') {
-          delete pageParams.appId;
+          delete this.pageParams.appId;
         } else {
-          pageParams.appId = val;
+          this.pageParams.appId = val;
         }
-        this.$apollo.queries.emailList.setVariables(pageParams);
+        this.getEmailList();
       },
       handleDelete(index, item) {
         this.$confirm('你确认要删除么？', '提示').then(async () => {
-          let res = await this.$apollo.mutate({mutation: deleteEmail, variables: {id: item.id},update:(store,{data:{deleteEmail}})=>{
-            this.$apollo.queries.emailList.refetch();
-                  /*if(deleteEmail){
-                    const data = store.readQuery({query: emailList, variables: this.emailList.pageParams});
-                    data.emailList.rows.splice(index,1);
-                    store.writeQuery({query: emailList, data});
-                  }*/
-          }});
-          if (res.data.deleteEmail) {
-//            this.emails.splice(index, 1);
-            this.$message.success('删除成功');
-          } else {
-            this.$message.error('删除失败，请稍后再试');
+          let res = await this.$api.email.destroy(item.id);
+          if (res) {
+            this.emails.splice(index, 1);
           }
         })
       },
@@ -213,36 +196,17 @@
         this.$refs[form].validate(async (val) => {
           if (val) {
             if (this.ruleForm.id) {
-              let res = await this.$apollo.mutate({
-                mutation: updateEmail,
-                variables: {appId: parseInt(this.ruleForm.appId), email: this.ruleForm.email, id: this.ruleForm.id},
-                update:(store,{data:{updateEmail}})=>{
-                  const data = store.readQuery({query: emailList, variables: this.emailList.pageParams});
-                  data.emailList.rows[index]=updateEmail;
-                  store.writeQuery({query: emailList, data});
-              }
-              });
-              if (res.data.updateEmail) {
+              let res = await this.$api.email.update(this.ruleForm);
+              if (res) {
                 this.$message.success('新增成功');
                 this.getEmailList();
                 this.dialogVisible = false;
               }
             } else {
-              let res = await this.$apollo.mutate({
-                mutation: createEmail,
-                variables: {appId: this.ruleForm.appId, email: this.ruleForm.email},
-                update: (store, {data: {createEmail}}) => {
-                  this.$apollo.queries.emailList.refetch();
-                  /*console.log(store);
-                  const data = store.readQuery({query: emailList, variables: this.emailList.pageParams});
-                  data.emailList.rows.unshift(createEmail);
-                  store.writeQuery({query: emailList, data});
-                  console.log(data);
-                  console.log(store);*/
-                }
-              });
-              if (res.data.createEmail) {
+              let res = await this.$api.email.create(this.ruleForm);
+              if (res) {
                 this.$message.success('新增成功');
+                this.getEmailList();
                 this.dialogVisible = false;
               }
             }
@@ -251,19 +215,20 @@
       },
       openDialog() {
         this.ruleForm = {
-          emial: '',
+          email: '',
           appId: ''
         };
         this.dialogTitle = '新增邮件通知';
         this.dialogVisible = true;
       },
       pageChange(page) {
-        this.$apollo.queries.emailList.refetch({page:page});
+        this.pageParams.page=page;
+        this.getEmailList();
       }
     },
     async created() {
-//    this.getEmailList();
-//    this.getUserApps();
+      this.getEmailList();
+      this.getUserApps();
     }
   }
 </script>

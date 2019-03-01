@@ -17,17 +17,16 @@ import  api from '@/api';
 import store from './vuex/store'
 import filter from './filter'
 
-console.log(api);
 
 library.add(faHome,faTorah,faCog,faExclamationTriangle,faEnvelope,faPenSquare,faBellSlash,faBell,faTrashAlt);
 
-Vue.component('icon', FontAwesomeIcon)
+Vue.component('icon', FontAwesomeIcon);
 
 Vue.use(ElementUI);
 
 Object.keys(filter).forEach(key => {///挂载过滤器
   Vue.filter(key, filter[key])
-})
+});
 
 Vue.config.errorHandler = function (err, vm, info) {
   let { message, name, script, line, column, stack } = err;
@@ -59,6 +58,7 @@ router.beforeEach(async (to, from, next) => { //to:目标，from：来源
 });
 
 Vue.config.productionTip = false
+Vue.prototype.$api=api;
 
 /* eslint-disable no-new */
 new Vue({

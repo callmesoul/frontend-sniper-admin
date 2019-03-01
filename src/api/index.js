@@ -7,6 +7,9 @@ import {Message} from 'element-ui'
 axios.defaults.baseURL = config.service();
 axios.interceptors.request.use(
   config => {
+    if (store.state.auth.token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
+      config.headers['token'] = store.state.auth.token;
+    }
     return config;
   }
 );
@@ -25,8 +28,9 @@ axios.interceptors.response.use(
         }
       }
     }
-    console.log(error);
-    if(error.response && error.response.data){
+    if(error.response.status === 400){
+      debugger;
+      Message.error(error.response.data.msg);
       return Promise.reject(error.response.data);  // 返回接口返回的错误信息
     }else{
       return Promise.reject(error);  // 返回接口返回的错误信息
@@ -37,7 +41,7 @@ axios.interceptors.response.use(
 let set= (apiName)=> {
   let _api={
     index: (params) =>{
-      return axios.get(`/api/${apiName}`,params);
+      return axios.get(`/api/${apiName}`,{params:params});
     },
     show: (id) =>{
       return axios.get(`/api/${apiName}/${id}`);
@@ -63,9 +67,9 @@ let api={
   register: (params) =>{
     return axios.post("/register",params);
   },
-  errors:set('errors'),
-  emails:set('emails'),
-  apps:set('apps'),
+  error:set('errors'),
+  email:set('emails'),
+  app:set('apps'),
 };
 
 export default api;

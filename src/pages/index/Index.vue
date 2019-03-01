@@ -5,7 +5,7 @@
         <template v-if="errors.length>0">
           <router-link :to="{name:'error',params:{id:item.id}}" v-for="item in errors" :key="item.id" class="flex flex-align-center error-item">
             <icon icon="exclamation-triangle" :class="{'error':item.level==='error','warning':item.level==='warning','info':item.level==='info'}" />
-            <span class="project">{{item.errorApp.name}}</span>
+            <span class="project">{{item.app.name}}</span>
             <span class="cont flex1">{{item.title}}</span>
             <span class="time">{{item.updatedAt | time}}</span>
           </router-link>
@@ -50,12 +50,16 @@ export default {
   },
   methods:{
     async getUserErrors(){
-      let res=await this.$apollo.query({query:userErrors});
-      this.errors=res.data.userErrors;
+      let res=await this.$api.error.index({userErrors:true});
+      if(res){
+        this.errors=res.errors;
+      }
     },
     async getUserApps(){
-      let res=await this.$apollo.query({query:userApps});
-      this.apps=res.data.userApps;
+      let res=await this.$api.app.index({getSelf:true});
+      if(res){
+        this.apps=res.apps;
+      }
     }
   },
   async created(){
