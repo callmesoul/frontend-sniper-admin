@@ -183,6 +183,7 @@
         this.$confirm('你确认要删除么？', '提示').then(async () => {
           let res = await this.$api.email.destroy(item.id);
           if (res) {
+            this.$message.success(res.msg);
             this.emails.splice(index, 1);
           }
         })
@@ -195,20 +196,16 @@
       sumitForm(form) {
         this.$refs[form].validate(async (val) => {
           if (val) {
+            let res;
             if (this.ruleForm.id) {
-              let res = await this.$api.email.update(this.ruleForm);
-              if (res) {
-                this.$message.success('新增成功');
-                this.getEmailList();
-                this.dialogVisible = false;
-              }
+              res = await this.$api.email.update(this.ruleForm);
             } else {
-              let res = await this.$api.email.create(this.ruleForm);
-              if (res) {
-                this.$message.success('新增成功');
-                this.getEmailList();
-                this.dialogVisible = false;
-              }
+              res = await this.$api.email.create(this.ruleForm);
+            }
+            if (res) {
+              this.$message.success(res.msg);
+              this.getEmailList();
+              this.dialogVisible = false;
             }
           }
         })

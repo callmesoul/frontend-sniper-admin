@@ -12,7 +12,6 @@
         <el-menu-item index="/index"><icon icon="home" />首页</el-menu-item>
         <el-menu-item index="/app"><icon icon="torah" />项目</el-menu-item>
         <el-menu-item index="/email"><icon icon="envelope" />邮件通知</el-menu-item>
-        <el-menu-item index="/config"><icon icon="cog" />配置</el-menu-item>
       </el-menu>
     </header>
     <div id="main" class="flex1">

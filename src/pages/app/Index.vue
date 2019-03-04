@@ -66,21 +66,26 @@ export default {
   },
   methods:{
     async getAppErrors(){
-      let res=await this.$apollo.query({query:appErrors,variables:this.pageParams});
-      this.errors=res.data.appErrors.rows;
-      this.pageParams=res.data.appErrors.pageParams;
+      let res= await this.$api.error.index(this.pageParams);
+      if(res){
+        this.errors=res.errors;
+        this.pageParams=res.data.appErrors.pageParams;
+      }
+
     },
     pageChange(page){
       this.pageParams.page=page;
       this.getAppErrors();
     },
     async getApp(){
-      let res=await this.$apollo.query({query:app,variables:{id:this.$route.params.id}});
-      this.app=res.data.app;
+      let res= await this.$api.app.show(this.$route.params.id);
+      if(res){
+        this.app=res.app;
+      }
     },
   },
   async created(){
-    this.pageParams.id=this.$route.params.id;
+    this.pageParams.appId=this.$route.params.id;
     this.getAppErrors();
     this.getApp();
   }

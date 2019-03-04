@@ -23,7 +23,7 @@
         </div>
         <div class="error-msg-item flex flex-align-center">
           <label>错误次数</label>
-          <span class="flex1">{{error.sameErrorList.length}}次</span>
+          <span class="flex1">{{sames.length}}次</span>
         </div>
         <div class="error-msg-item flex flex-align-center">
           <label>错误所在行数</label>
@@ -41,7 +41,7 @@
     </div>
 
     <el-table
-      :data="error.sameErrorList"
+      :data="sames"
       style="width: 100%">
       <el-table-column
         prop="id"
@@ -66,19 +66,22 @@ export default {
   data () {
     return {
       error: {},
-
+      sames:[]
     }
   },
   methods:{
-    async getErrot(){
-      let res=await this.$apollo.query({query:error,variables:{id:this.$route.params.id}});
-      this.error=res.data.error;
+    async getError(){
+      let res= await this.$api.error.show(this.$route.params.id);
+      if(res){
+        this.error=res.error;
+        this.sames=res.sames;
+      }
+
     },
 
   },
   async created(){
-    this.getErrot();
-    this.getApp();
+    this.getError();
   }
 }
 </script>
