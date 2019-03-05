@@ -5,9 +5,9 @@
         <template v-if="errors.length>0">
           <router-link :to="{name:'error',params:{id:item.id}}" v-for="item in errors" :key="item.id" class="flex flex-align-center error-item">
             <icon icon="exclamation-triangle" :class="{'error':item.level==='error','warning':item.level==='warning','info':item.level==='info'}" />
-            <span class="project">{{item.app.name}}</span>
+            <span class="project">{{item.name}}</span>
             <span class="cont flex1">{{item.title}}</span>
-            <span class="time">{{item.updatedAt | time}}</span>
+            <span class="time">{{item.createdAt | time}}</span>
           </router-link>
         </template>
         <template v-else>

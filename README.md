@@ -14,7 +14,7 @@ password:test
 
 ## 项目集
 
-- 服务端 [frontend-sniper-server](https://github.com/callmesoul/frontend-sniper-server)
+- 服务端   [frontend-sniper-server](https://github.com/callmesoul/frontend-sniper-server)
 - 管理后台 [frontend-sniper-admin](https://github.com/callmesoul/frontend-sniper-admin)
 - 错误探针 [frontend-sniper-explorer](https://github.com/callmesoul/frontend-sniper-explorer)
 
