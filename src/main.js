@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import './assets/style/element/index.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHome,faTorah,faCog,faExclamationTriangle,faEnvelope,faPenSquare,faBellSlash,faBell,faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
