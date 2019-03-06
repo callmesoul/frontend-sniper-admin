@@ -13,3 +13,33 @@
 2. `修改until/config.js` 后台服务地址
 3. `npm install` 安装依赖
 4. `npm run dev` open http://localhost:8080/
+
+
+## 预览
+admin-index
+
+![admin-index](https://github.com/callmesoul/frontend-sniper-admin/blob/master/screen/admin-index.png)
+
+
+app-errors
+
+![app-errors](https://github.com/callmesoul/frontend-sniper-admin/blob/master/screen/app-errors.png)
+
+
+app.png
+
+![app.png](https://github.com/callmesoul/frontend-sniper-admin/blob/master/screen/app.png)
+
+
+error-detail
+
+![error-detail](https://github.com/callmesoul/frontend-sniper-admin/blob/master/screen/error-detail.png)
+
+
+email
+
+![email](https://github.com/callmesoul/frontend-sniper-admin/blob/master/screen/email.png)
+
+email-notice
+
+![email](https://github.com/callmesoul/frontend-sniper-admin/blob/master/screen/email-notice.png)
