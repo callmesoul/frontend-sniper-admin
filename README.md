@@ -14,6 +14,13 @@
 3. `npm install` 安装依赖
 4. `npm run dev` open http://localhost:8080/
 
+## Demo
+[demo](http://frontend-sniper-admin.callmesoul.cn)
+
+username:admin
+
+password:admin
+
 
 ## 预览
 admin-index
