@@ -17,6 +17,10 @@
 
     .typerror-msg-title{
       font-size: 18px;
+      margin-top: 30px;
+      &:first-child{
+        margin-top: 0px;
+      }
     }
 
     .error-msg-list{

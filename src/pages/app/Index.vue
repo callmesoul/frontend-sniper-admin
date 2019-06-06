@@ -68,10 +68,9 @@ export default {
     async getAppErrors(){
       let res= await this.$api.error.index(this.pageParams);
       if(res){
-        this.errors=res.errors;
-        this.pageParams=res.data.appErrors.pageParams;
+        this.errors=res.rows;
+        this.pageParams.totalPage = Math.ceil(res.count/this.pageParams.limit);
       }
-
     },
     pageChange(page){
       this.pageParams.page=page;

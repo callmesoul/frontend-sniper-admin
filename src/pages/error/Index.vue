@@ -60,9 +60,18 @@
             <span class="cont" v-if="error.cpu">{{error.cpu.architecture}}</span>
           </div>
         </div>
+        <div class="typerror-msg-title">用户操作</div>
+        <div class="error-msg-list">
+          <div class="error-msg-item flex flex-align-center">
+            <label>视频回放</label>
+            <div class="cont">
+              <el-button type="primary" icon="el-icon-caret-right" circle v-if="error.records && error.records.length>0" @click="playRecord"></el-button>
+              <span v-else>无</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
     <el-table
       :data="sames"
       style="width: 100%">
@@ -91,7 +100,8 @@
 </template>
 
 <script>
-
+  import { Replayer } from 'rrweb'
+  import 'rrweb/dist/rrweb.min.css'
 
 export default {
   data () {
@@ -115,8 +125,13 @@ export default {
     },
     toErrorDetail(id){
       this.$router.push({name:'error',params:{id:id}});
+    },
+    //播放回放
+    playRecord(){
+      console.log(this.error.records);
+      const replayer = new Replayer(this.error.records);
+      replayer.play();
     }
-
   },
   async created(){
     this.getError();
