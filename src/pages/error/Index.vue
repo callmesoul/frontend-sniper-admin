@@ -96,18 +96,22 @@
         </template>
       </el-table-column>
     </el-table>
+    <div id="rrew-palyer" ref="rrew-palyer" class="flex flex-align-center" v-show="isShowPlayer">
+      <a class="el-icon-close" @click="isShowPlayer=false"></a>
+    </div>
   </div>
 </template>
 
 <script>
-  import { Replayer } from 'rrweb'
-  import 'rrweb/dist/rrweb.min.css'
+  import rrwebPlayer from 'rrweb-player'
+  import 'rrweb-player/dist/style.css'
 
 export default {
   data () {
     return {
       error: {},
-      sames:[]
+      sames:[],
+      isShowPlayer:false
     }
   },
   watch:{
@@ -128,9 +132,19 @@ export default {
     },
     //播放回放
     playRecord(){
-      console.log(this.error.records);
-      const replayer = new Replayer(this.error.records);
-      replayer.play();
+      var list=document.getElementById("rrew-palyer");
+      if(list.childNodes[1]){
+        list.removeChild(list.childNodes[1]);
+      }
+      this.isShowPlayer=true;
+      new rrwebPlayer({
+        target: document.getElementById('rrew-palyer'), // customizable root element
+        data: {
+          events:this.error.records,
+          autoPlay: false,
+        },
+      });
+
     }
   },
   async created(){

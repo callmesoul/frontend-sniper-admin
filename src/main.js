@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
 import './assets/style/element/index.css';
+import 'rrweb/dist/rrweb.min.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHome,faTorah,faCog,faExclamationTriangle,faEnvelope,faPenSquare,faBellSlash,faBell,faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
